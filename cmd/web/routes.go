@@ -24,5 +24,10 @@ func routes(app *config.AppConfig) http.Handler {
 
 	mux.Get("/home", http.HandlerFunc(handler.Repo.Home))
 	mux.Get("/about", http.HandlerFunc(handler.Repo.About))
+
+	// specify tempat naroh2 file static agar di file tmpl bisa diakses
+	fileServer := http.FileServer(http.Dir("./static/"))
+	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
+
 	return mux
 }
